@@ -1,0 +1,7 @@
+# Ensure GitHub Linguist indexes all application source files
+*.js linguist-language=JavaScript linguist-vendored=false linguist-generated=false
+*.css linguist-language=CSS linguist-vendored=false linguist-generated=false
+*.html linguist-language=HTML linguist-vendored=false linguist-generated=false
+
+# Treat helper shell scripts as build/tooling scripts so they don't skew language stats
+*.sh linguist-vendored=true

@@ -1,0 +1,14 @@
+{
+  "name": "peakoff-platform",
+  "version": "1.0.0",
+  "private": true,
+  "description": "PeakOff — Dynamic discount and customer-demand optimization platform connecting B2B venues with B2C real-time customer opportunities.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "dev:dashboard": "node server.js dashboard",
+    "dev:mobile": "node server.js mobile",
+    "check": "node --check server.js && node --check src/engine.js && node --check dashboard/dist/app.js && node --check mobile/dist/app.js"
+  }
+}

@@ -1,1 +1,9 @@
-{"name":"peakoff-business-demo","private":true,"version":"1.0.0","scripts":{"dev":"python3 -m http.server 3000 --directory dist","check":"node --check dist/app.js"}}
+{
+  "name": "peakoff-business-demo",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "node ../server.js dashboard",
+    "check": "node --check dist/app.js"
+  }
+}

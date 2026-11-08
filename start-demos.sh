@@ -3,6 +3,10 @@ set -euo pipefail
 
 project_root="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+if command -v node >/dev/null 2>&1; then
+  exec node "$project_root/server.js"
+fi
+
 dashboard_pid=""
 mobile_pid=""
 

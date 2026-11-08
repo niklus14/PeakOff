@@ -273,16 +273,19 @@ When rendering the workflow diagram for pitch decks or investor presentations:
 
 ## Running the Local Prototype Demos
 
-This repository includes interactive web demos for both sides of the PeakOff platform:
+This repository includes interactive web applications and a real-time sync engine for both sides of the PeakOff platform:
 
 - **`dashboard/`** — B2B Business Owner Dashboard (`http://localhost:3000`)
 - **`mobile/`** — B2C Mobile Customer Application (`http://localhost:3001`)
+- **`src/engine.js` & `server.js`** — Core Dynamic Discount Optimization Engine & live cross-app sync server
 
 ### Quick Start
 
-Run both web applications locally using the startup script:
+Run both web applications locally with live cross-app synchronization:
 
 ```bash
+npm start
+# or
 ./start-demos.sh
 ```
 
