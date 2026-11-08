@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap');
+
+:root{
+  --navy:#052f42;
+  --navy-2:#06465b;
+  --teal:#00a690;
+  --teal-dark:#007f73;
+  --mint:#dff6ef;
+  --amber:#ffb51b;
+  --paper:#f7f4ed;
+  --white:#fff;
+  --ink:#13262e;
+  --muted:#687b82;
+  --line:#d9e0de;
+  --danger:#d94f46;
+  --shadow:0 18px 55px rgba(1,31,44,.2);
+}
+
+*{box-sizing:border-box}
+html{background:#dfe7e5}
+body{margin:0;min-height:100vh;color:var(--ink);font:14px/1.4 "DM Sans",sans-serif;background:#dfe7e5;display:flex;justify-content:center;-webkit-font-smoothing:antialiased}
+button,input{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid #ffd66d;outline-offset:2px}
+.app{width:min(100%,430px);height:100dvh;overflow:hidden;background:var(--paper);position:relative}
+.screen{height:100%;overflow-y:auto;scrollbar-width:none;padding-bottom:84px;background:var(--paper)}
+.screen::-webkit-scrollbar{display:none}
+.top-region{position:relative;color:white;background:linear-gradient(145deg,var(--navy),#03465c 72%,#037a7b);padding:30px 18px 16px;overflow:hidden}
+.top-region:after{content:"";position:absolute;width:260px;height:90px;border:1px solid rgba(53,225,204,.25);border-radius:50%;right:-95px;bottom:-60px;rotate:-16deg;box-shadow:0 0 35px rgba(0,206,187,.18)}
+.status{height:20px;display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:700;position:relative;z-index:2;padding:0 7px 0 3px}
+.status-icons{display:flex;gap:7px;align-items:center}
+.status-icons svg{width:16px;height:16px}
+.brand-row{display:flex;align-items:center;gap:8px;margin:8px 0 2px;position:relative;z-index:2}
+.brand-mark{width:31px;height:35px;color:var(--amber)}
+.brand-name{font:800 22px/1 "Manrope",sans-serif;letter-spacing:-.7px}.brand-name b{color:var(--amber)}
+.page-title{font:800 29px/1.05 "Manrope",sans-serif;letter-spacing:-1.1px;margin:8px 0 0;position:relative;z-index:2}
+.top-actions{display:flex;justify-content:space-between;align-items:center;margin-top:7px;position:relative;z-index:2}
+.back-button,.round-button{display:grid;place-items:center;width:35px;height:35px;border:1px solid rgba(255,255,255,.24);border-radius:12px;background:rgba(255,255,255,.12);color:white}
+.back-button svg,.round-button svg{width:20px;height:20px}
+.route-map{margin:0 14px 12px;height:208px;border-radius:22px;overflow:hidden;background:#e8e2d5;border:1px solid rgba(18,50,60,.12);position:relative;box-shadow:0 4px 12px rgba(24,52,61,.08)}
+.route-map svg{width:100%;height:100%;display:block}
+.map-pill{position:absolute;z-index:2;background:white;border-radius:10px;padding:6px 9px;font-weight:700;box-shadow:0 3px 9px rgba(5,47,66,.14)}
+.map-pill.from{left:38px;top:56px}.map-pill.to{right:22px;bottom:44px}
+.route-card{margin:0 14px 12px;background:white;border:1px solid var(--line);border-radius:17px;padding:4px 14px;box-shadow:0 3px 10px rgba(17,52,62,.06)}
+.field-row{display:grid;grid-template-columns:26px 1fr auto;gap:7px;align-items:center;min-height:48px;border-bottom:1px solid #e8ecea}
+.field-row:last-child{border-bottom:0}.field-row svg{width:21px;height:21px;color:var(--teal)}.field-row:nth-child(2) svg{color:#ff9914}
+.field-row span{color:var(--muted);font-size:12px}.field-row strong{font-size:14px;margin-left:5px}.field-row button{border:0;background:transparent;color:var(--ink);padding:8px}
+.mode-switch{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 14px 15px}
+.mode{border:1px solid var(--line);background:#fff;border-radius:14px;padding:10px 6px;font-weight:700;color:#4c5e65;display:flex;align-items:center;justify-content:center;gap:7px}
+.mode svg{width:19px;height:19px}.mode.active{color:var(--teal-dark);background:var(--mint);border-color:#5ccdbd;box-shadow:inset 0 0 0 1px #5ccdbd}
+.section{padding:0 14px}.section-head{display:flex;align-items:center;justify-content:space-between;margin:8px 2px 8px}.section-head h2{font:800 18px/1.2 "Manrope";letter-spacing:-.4px;margin:0}.section-head span{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)}.section-head span svg{width:15px;height:15px}
+.time-list{display:grid;gap:6px}.time-option{width:100%;display:grid;grid-template-columns:22px 58px 1fr 63px;gap:4px;align-items:center;text-align:left;border:1px solid var(--line);background:white;border-radius:13px;padding:8px 10px;color:var(--ink)}.time-option svg{width:18px;height:18px}.time-option strong{font-size:15px}.time-option small{margin-left:0;color:var(--muted);text-align:right;white-space:nowrap}.time-option.active{border-color:var(--teal);background:#f2fbf8}.traffic{justify-self:start;font-size:11px;font-weight:700;padding:4px 9px;border-radius:12px;background:#ffe1bb;color:#a35312}.traffic.busy{background:#ffe28b;color:#7b5704}.traffic.calm{background:#cbf0d9;color:#167344}
+.primary-button{width:calc(100% - 28px);margin:16px 14px 0;border:0;border-radius:16px;padding:15px 18px;background:linear-gradient(135deg,#00b8a1,#008e80);color:white;font:800 16px "Manrope";box-shadow:0 8px 18px rgba(0,147,131,.24);display:flex;align-items:center;justify-content:center;gap:10px}.primary-button svg{width:21px;height:21px}.primary-button:active{translate:0 1px}
+.filters{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 14px 9px}.filter-select{border:1px solid rgba(255,255,255,.32);border-radius:12px;background:rgba(255,255,255,.95);padding:10px 10px;color:var(--ink);display:flex;align-items:center;gap:7px;font-weight:700;position:relative;z-index:2}.filter-select svg{width:18px;height:18px;color:var(--teal)}
+.tabs{display:flex;gap:6px;overflow:auto;padding:0 14px 8px;scrollbar-width:none}.tab{white-space:nowrap;border:1px solid var(--line);background:#eeeae2;border-radius:13px;padding:9px 14px;font-weight:700;color:#4d5b60}.tab.active{background:linear-gradient(135deg,#10b6a3,#008b80);color:white;border-color:transparent;box-shadow:0 4px 10px rgba(0,146,130,.2)}
+.offer-list{display:grid;gap:9px;padding:0 12px}.offer-card{display:grid;grid-template-columns:140px 1fr 24px;min-height:123px;border:1px solid #d5dcda;border-radius:17px;background:white;overflow:hidden;text-align:left;padding:0;color:var(--ink);box-shadow:0 3px 9px rgba(19,50,59,.06)}.offer-card.best{border:2px solid var(--teal)}.offer-image{position:relative;min-height:123px;background:#d8ddd8 center/cover}.rank{position:absolute;left:7px;top:7px;display:grid;place-items:center;min-width:28px;height:28px;border-radius:10px;background:var(--amber);color:#172c34;font:800 14px "Manrope";box-shadow:0 2px 6px rgba(0,0,0,.15)}.best-label{position:absolute;left:7px;top:7px;background:var(--amber);padding:5px 8px;border-radius:9px;font-size:11px;font-weight:800}.offer-copy{padding:10px 7px 8px 11px}.offer-copy h3{font:800 16px/1.1 "Manrope";margin:0 0 4px;letter-spacing:-.3px}.discount{display:inline-block;background:var(--amber);padding:3px 8px;border-radius:9px;font:800 15px "Manrope"}.meta{display:flex;align-items:center;gap:5px;font-size:11px;color:#40525a;margin-top:5px}.meta svg{width:14px;height:14px}.price{display:block;color:var(--teal-dark);font:800 20px/1.1 "Manrope";margin-top:3px}.chevron{display:grid;place-items:center}.chevron svg{width:20px;height:20px}
+.stock-banner{margin:10px 14px 2px;background:linear-gradient(100deg,#ffbe24,#ff9c13);border-radius:13px;padding:10px 14px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:8px}.stock-banner svg{width:19px;height:19px}
+.bottom-nav{position:absolute;z-index:15;left:0;right:0;bottom:0;height:73px;background:rgba(255,255,255,.96);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);padding:8px 7px max(7px,env(safe-area-inset-bottom));backdrop-filter:blur(16px)}
+.nav-item{border:0;background:transparent;color:#64767c;display:grid;place-items:center;gap:2px;font-size:10px;font-weight:700}.nav-item svg{width:22px;height:22px}.nav-item.active{color:var(--teal-dark)}.nav-item.active:before{content:"";position:absolute;width:31px;height:4px;background:var(--teal);border-radius:0 0 4px 4px;top:0}
+.detail-hero{height:228px;background:center/cover;position:relative}.detail-hero:after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(3,31,42,.25),transparent 45%,rgba(3,31,42,.25))}.detail-top{position:absolute;z-index:2;inset:28px 15px auto;display:flex;align-items:center;justify-content:space-between}.detail-brand{color:white;font:800 20px "Manrope";text-shadow:0 1px 5px #001f2a}.detail-sheet{position:relative;margin-top:-18px;background:var(--paper);border-radius:22px 22px 0 0;padding:16px 14px 96px;z-index:3;min-height:calc(100% - 210px)}.detail-sheet h1{font:800 26px/1.1 "Manrope";letter-spacing:-.8px;margin:0}.venue-meta{display:flex;gap:12px;align-items:center;color:#53666d;margin:7px 0 12px;font-size:12px}.venue-meta span{display:flex;gap:5px;align-items:center}.venue-meta svg{width:16px;height:16px}.deal-strip{display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(110deg,#ffbd24,#ff9c12);border-radius:13px;padding:10px;font:800 15px "Manrope"}.deal-strip svg{width:20px;height:20px}.bundle{display:grid;grid-template-columns:132px 1fr;gap:12px;background:white;border:1px solid var(--line);border-radius:17px;padding:9px;margin:12px 0}.bundle img{width:132px;height:91px;object-fit:cover;border-radius:12px}.bundle h2{font:800 16px/1.2 "Manrope";margin:3px 0}.old-price{text-decoration:line-through;color:var(--muted)}.new-price{color:var(--teal-dark);font:800 21px "Manrope"}.stock{display:inline-flex;align-items:center;gap:5px;border:1px solid #ffc052;background:#fff3d1;border-radius:9px;padding:4px 7px;font-size:11px;color:#a35c09}.stock svg{width:14px;height:14px}.availability{display:grid;grid-template-columns:27px 1fr;gap:8px;align-items:start;margin:14px 5px}.availability svg{width:22px;height:22px}.availability strong{display:block}.availability small{color:var(--muted)}.mini-map{height:105px;border-radius:17px;overflow:hidden;background:#e2e5dc}.mini-map svg{width:100%;height:100%}.sticky-claim{position:absolute;z-index:10;left:0;right:0;bottom:0;background:linear-gradient(transparent,var(--paper) 26%);padding:20px 14px 14px}.sticky-claim .primary-button{width:100%;margin:0}
+.voucher-screen{background:linear-gradient(155deg,var(--navy),#016f70);color:white;display:grid;place-items:center;padding:32px 18px}.voucher-card{width:100%;background:var(--paper);color:var(--ink);border-radius:24px;padding:18px;box-shadow:0 20px 45px rgba(0,17,24,.3);text-align:center}.voucher-card .brand-row{justify-content:center;color:var(--navy)}.voucher-card h1{font:800 24px "Manrope";margin:12px 0 4px}.voucher-card p{color:var(--muted);margin:0 0 14px}.qr{width:184px;height:184px;margin:12px auto;background:#fff;border:10px solid #fff;border-radius:12px;display:grid;grid-template-columns:repeat(13,1fr);gap:1px;box-shadow:0 0 0 1px var(--line)}.qr i{background:transparent}.qr i.on{background:#071e27}.voucher-code{font:800 16px "Manrope";letter-spacing:2px}.voucher-terms{font-size:11px;color:var(--muted);border-top:1px dashed #c7cecc;margin-top:14px;padding-top:12px}.voucher-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}.secondary-button{border:1px solid var(--line);border-radius:13px;background:white;padding:12px;font-weight:800;color:var(--ink)}
+.empty-state{text-align:center;padding:50px 34px}.empty-state svg{width:52px;height:52px;color:var(--teal);margin-bottom:12px}.empty-state h2{font:800 21px "Manrope";margin:0 0 7px}.empty-state p{color:var(--muted)}
+.profile-card{margin:14px;background:white;border:1px solid var(--line);border-radius:18px;padding:16px}.profile-head{display:flex;align-items:center;gap:12px}.avatar{display:grid;place-items:center;width:52px;height:52px;border-radius:18px;background:var(--mint);color:var(--teal-dark);font:800 18px "Manrope"}.profile-card h2{margin:0;font:800 18px "Manrope"}.profile-card p{margin:3px 0 0;color:var(--muted)}.menu-row{display:grid;grid-template-columns:28px 1fr 20px;align-items:center;padding:14px 0;border-top:1px solid #e7ecea}.menu-row:first-of-type{margin-top:14px}.menu-row svg{width:20px;height:20px;color:var(--teal)}
+#toast{position:fixed;z-index:50;left:50%;bottom:28px;translate:-50% 18px;background:#102b35;color:white;padding:11px 16px;border-radius:12px;box-shadow:0 10px 28px rgba(0,23,31,.22);opacity:0;pointer-events:none;transition:.2s ease;white-space:nowrap;font-size:13px}#toast.show{opacity:1;translate:-50% 0}
+@media(min-width:431px){.app{border-left:1px solid #cbd7d4;border-right:1px solid #cbd7d4}}
+@media(max-width:430px){body{background:var(--paper)}.top-region{padding-top:max(18px,env(safe-area-inset-top))}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
