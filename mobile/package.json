@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "node ../server.js mobile",
+    "build": "echo 'Static bundle ready in dist/'",
     "check": "node --check dist/app.js"
   }
 }

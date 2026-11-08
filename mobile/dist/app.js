@@ -2,16 +2,18 @@
  * PeakOff Mobile Customer Application (Stages 07–12)
  *
  * Interactive route-aware offer discovery, single-use QR voucher generation,
- * and live synchronization with the PeakOff Business Dashboard.
+ * browser history navigation guard, and live synchronization with the
+ * PeakOff Business Dashboard.
  */
 
 const baseOffers = [
   {
     id: 'coffee-pastry',
     rank: 1,
-    category: 'recommended',
+    category: 'coffee',
+    featured: true,
     name: 'Coffee & pastry',
-    venue: 'Coffee & Co',
+    venue: 'Coffee & Co · Coffee Shop',
     discount: 20,
     price: 6.4,
     oldPrice: 8,
@@ -19,17 +21,39 @@ const baseOffers = [
     stock: 4,
     expires: '19:00',
     tag: 'Best match',
+    perks: 'Quiet seating · Fast Wi-Fi',
     image:
       'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=800&q=88',
     hero:
       'https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1000&q=88'
   },
   {
-    id: 'study-hour',
+    id: 'bowling',
     rank: 2,
+    category: 'entertainment',
+    featured: true,
+    name: 'Bowling session & shoes',
+    venue: 'Strike Zone · Bowling Center',
+    discount: 25,
+    price: 11.25,
+    oldPrice: 15,
+    walk: 8,
+    stock: 6,
+    expires: '21:00',
+    tag: 'Fun stop',
+    perks: 'Lanes ready · Shoe rental included',
+    image:
+      'https://images.unsplash.com/photo-1514727200133-0f3a18aeeab4?auto=format&fit=crop&w=800&q=88',
+    hero:
+      'https://images.unsplash.com/photo-1587536849024-daaa4a417b16?auto=format&fit=crop&w=1000&q=88'
+  },
+  {
+    id: 'study-hour',
+    rank: 3,
     category: 'special',
-    name: 'Anti-cafe study hour',
-    venue: 'Sakit Məkan',
+    featured: true,
+    name: 'Anti-cafe study & board games',
+    venue: 'Sakit Məkan · Anti-Cafe',
     discount: 30,
     price: 5,
     oldPrice: 7.15,
@@ -37,35 +61,119 @@ const baseOffers = [
     stock: 9,
     expires: '20:00',
     tag: 'Quiet pick',
+    perks: 'Unlimited tea & coffee · Board games',
     image:
       'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=800&q=88',
     hero:
       'https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1000&q=88'
   },
   {
-    id: 'bowling',
-    rank: 3,
-    category: 'recommended',
-    name: 'Bowling session',
-    venue: 'Strike Zone',
-    discount: 15,
-    price: 12,
-    oldPrice: 14.1,
-    walk: 8,
-    stock: 6,
-    expires: '21:00',
-    tag: 'Fun stop',
+    id: 'roast-lab',
+    rank: 4,
+    category: 'coffee',
+    featured: false,
+    name: 'Iced latte & almond croissant',
+    venue: 'Baku Roast Lab · Specialty Coffee',
+    discount: 25,
+    price: 5.25,
+    oldPrice: 7,
+    walk: 4,
+    stock: 7,
+    expires: '19:30',
+    tag: 'Roastery deal',
+    perks: 'Power outlets · Terrace seating',
     image:
-      'https://images.unsplash.com/photo-1514727200133-0f3a18aeeab4?auto=format&fit=crop&w=800&q=88',
+      'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=88',
     hero:
-      'https://images.unsplash.com/photo-1587536849024-daaa4a417b16?auto=format&fit=crop&w=1000&q=88'
+      'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1000&q=88'
+  },
+  {
+    id: 'vr-arena',
+    rank: 5,
+    category: 'entertainment',
+    featured: true,
+    name: 'VR gaming & arcade pass',
+    venue: 'VR Arena Baku · Entertainment',
+    discount: 35,
+    price: 9.75,
+    oldPrice: 15,
+    walk: 7,
+    stock: 5,
+    expires: '21:30',
+    tag: 'Multiplayer fun',
+    perks: '45-min full VR headset + 3 arcade tokens',
+    image:
+      'https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=800&q=88',
+    hero:
+      'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1000&q=88'
+  },
+  {
+    id: 'billiards-club',
+    rank: 6,
+    category: 'entertainment',
+    featured: false,
+    name: '1-hour pool table & drinks',
+    venue: 'Cue & Lounge · Billiards Club',
+    discount: 30,
+    price: 8.4,
+    oldPrice: 12,
+    walk: 6,
+    stock: 4,
+    expires: '20:30',
+    tag: 'After-work chill',
+    perks: 'Pro tables · 2 soft drinks included',
+    image:
+      'https://images.unsplash.com/photo-1575361204480-aadea25e6e68?auto=format&fit=crop&w=800&q=88',
+    hero:
+      'https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1000&q=88'
+  },
+  {
+    id: 'tea-house',
+    rank: 7,
+    category: 'coffee',
+    featured: false,
+    name: 'Azeri tea pot & pakhlava set',
+    venue: 'Chaykhana 19 · Tea House',
+    discount: 30,
+    price: 7,
+    oldPrice: 10,
+    walk: 6,
+    stock: 8,
+    expires: '21:00',
+    tag: 'Cozy lounge',
+    perks: 'Serves 2 · Traditional sweets included',
+    image:
+      'https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=800&q=88',
+    hero:
+      'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1000&q=88'
+  },
+  {
+    id: 'fitness-pass',
+    rank: 8,
+    category: 'special',
+    featured: false,
+    name: 'Off-peak gym & sauna pass',
+    venue: 'Pulse Fitness Hub · Wellness',
+    discount: 40,
+    price: 9,
+    oldPrice: 15,
+    walk: 7,
+    stock: 5,
+    expires: '20:00',
+    tag: 'Beat the rush',
+    perks: 'Towel service · Locker & sauna access',
+    image:
+      'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=88',
+    hero:
+      'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=1000&q=88'
   },
   {
     id: 'fresh-lunch',
-    rank: 4,
+    rank: 9,
     category: 'expiry',
-    name: 'Fresh lunch box',
-    venue: 'Urban Fork',
+    featured: false,
+    name: 'Fresh lunch & dinner box',
+    venue: 'Urban Fork · Bistro',
     discount: 35,
     price: 7.8,
     oldPrice: 12,
@@ -73,10 +181,31 @@ const baseOffers = [
     stock: 3,
     expires: '18:30',
     tag: 'Last-day special',
+    perks: 'Prepared today · Zero food waste',
     image:
       'https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=800&q=88',
     hero:
       'https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1000&q=88'
+  },
+  {
+    id: 'pastry-rescue',
+    rank: 10,
+    category: 'expiry',
+    featured: false,
+    name: '4-pack artisan pastry bundle',
+    venue: 'Sweet Crust Bakery · Cafe',
+    discount: 50,
+    price: 6,
+    oldPrice: 12,
+    walk: 4,
+    stock: 4,
+    expires: '19:00',
+    tag: '50% Rescue box',
+    perks: 'Baked this morning · Takeaway ready',
+    image:
+      'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=88',
+    hero:
+      'https://images.unsplash.com/photo-1517433670267-08bbd4be890f?auto=format&fit=crop&w=1000&q=88'
   }
 ];
 
@@ -114,11 +243,19 @@ const iconPaths = {
     '<path d="M3 8a3 3 0 0 0 0 6v4h18v-4a3 3 0 0 0 0-6V4H3z"/><path d="M13 7v2m0 2v2m0 2v2"/>',
   location:
     '<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2"/>',
-  logout: '<path d="M10 4H4v16h6m4-4 4-4-4-4m4 4H8"/>'
+  logout: '<path d="M10 4H4v16h6m4-4 4-4-4-4m4 4H8"/>',
+  coffee:
+    '<path d="M4 8h13v8a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4zm13 1h2a3 3 0 0 1 0 6h-2M7 3v2m4-2v2m4-2v2"/>',
+  bowling:
+    '<circle cx="12" cy="12" r="9"/><circle cx="10" cy="9" r="1"/><circle cx="14" cy="9" r="1"/><circle cx="12" cy="12" r="1"/>',
+  gamepad:
+    '<rect x="2" y="6" width="20" height="12" rx="4"/><path d="M6 12h4m-2-2v4m7-1h.01M18 11h.01"/>'
 };
 
 function icon(name, cls = '') {
-  return `<svg class="${cls}" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${iconPaths[name]}</svg>`;
+  return `<svg class="${cls}" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${
+    iconPaths[name] || iconPaths.tag
+  }</svg>`;
 }
 
 function logo() {
@@ -139,8 +276,9 @@ const state = {
   filter: 'recommended',
   mode: 'train',
   time: '18:30',
-  selectedOffer: null,
+  selectedOffer: 'coffee-pastry',
   claimed: Array.isArray(stored.claimed) ? stored.claimed : [],
+  redeemed: Array.isArray(stored.redeemed) ? stored.redeemed : [],
   favorites: Array.isArray(stored.favorites) ? stored.favorites : [],
   routeFrom: '28 May, Baku',
   routeTo: 'Ahmadli'
@@ -148,6 +286,82 @@ const state = {
 
 const app = document.querySelector('#app');
 const toast = document.querySelector('#toast');
+
+/**
+ * Browser History Management so pressing Back on mobile always stays inside
+ * the app and returns to the Home screen instead of exiting the site.
+ */
+function snapshotState() {
+  return {
+    screen: state.screen,
+    filter: state.filter,
+    selectedOffer: state.selectedOffer
+  };
+}
+
+function initHistoryGuard() {
+  try {
+    history.replaceState(
+      { screen: 'home', filter: 'recommended', selectedOffer: 'coffee-pastry', guard: true },
+      '',
+      '#home'
+    );
+    history.pushState(snapshotState(), '', `#${state.screen}`);
+  } catch {}
+}
+
+function navigateTo(screen, options = {}) {
+  if (options.filter) state.filter = options.filter;
+  if (options.selectedOffer) state.selectedOffer = options.selectedOffer;
+
+  const changed = state.screen !== screen || options.filter || options.selectedOffer;
+  state.screen = screen;
+
+  if (changed && !options.fromPopState) {
+    try {
+      history.pushState(snapshotState(), '', `#${screen}`);
+    } catch {}
+  }
+  render();
+}
+
+function goBackInApp() {
+  if (state.screen === 'voucher') {
+    navigateTo('detail');
+  } else if (state.screen === 'detail') {
+    navigateTo('explore');
+  } else if (state.screen !== 'home') {
+    navigateTo('home');
+  }
+}
+
+window.addEventListener('popstate', event => {
+  if (event.state && event.state.screen) {
+    if (event.state.guard && state.screen !== 'home') {
+      state.screen = 'home';
+      try {
+        history.pushState(snapshotState(), '', '#home');
+      } catch {}
+      render();
+      return;
+    }
+    state.screen = event.state.screen;
+    if (event.state.filter) state.filter = event.state.filter;
+    if (event.state.selectedOffer) state.selectedOffer = event.state.selectedOffer;
+    if (state.screen === 'home') {
+      try {
+        history.pushState(snapshotState(), '', '#home');
+      } catch {}
+    }
+    render();
+  } else {
+    state.screen = 'home';
+    try {
+      history.pushState(snapshotState(), '', '#home');
+    } catch {}
+    render();
+  }
+});
 
 const syncChannel =
   typeof BroadcastChannel !== 'undefined'
@@ -160,7 +374,9 @@ function syncWithBusinessState(bizState) {
   if (coffeeOffer) {
     const discount = bizState.active ? Number(bizState.discount) || 20 : 20;
     coffeeOffer.discount = discount;
-    coffeeOffer.price = Number((coffeeOffer.oldPrice * (1 - discount / 100)).toFixed(2));
+    coffeeOffer.price = Number(
+      (coffeeOffer.oldPrice * (1 - discount / 100)).toFixed(2)
+    );
   }
 }
 
@@ -198,6 +414,7 @@ function persist() {
     'peakoff-mobile-demo',
     JSON.stringify({
       claimed: state.claimed,
+      redeemed: state.redeemed,
       favorites: state.favorites
     })
   );
@@ -211,7 +428,7 @@ function notify(message) {
   toast.textContent = message;
   toast.classList.add('show');
   clearTimeout(notify.timer);
-  notify.timer = setTimeout(() => toast.classList.remove('show'), 2400);
+  notify.timer = setTimeout(() => toast.classList.remove('show'), 2500);
 }
 
 function statusBar() {
@@ -241,20 +458,34 @@ function mapGraphic(compact = false) {
     ${
       compact
         ? ''
-        : `<g transform="translate(125 43)"><path d="M0 0h30v30H0z" rx="8" fill="#ffad18"/><circle cx="15" cy="15" r="7" fill="none" stroke="#fff" stroke-width="2"/><path d="M20 12h3a3 3 0 0 1 0 6h-3" fill="none" stroke="#fff" stroke-width="2"/></g><g transform="translate(215 112)"><circle cx="15" cy="15" r="15" fill="#ffad18"/><path d="M9 10v14m12-14v14M9 15h12" stroke="#fff" stroke-width="2"/></g>`
+        : `<g transform="translate(125 43)"><rect width="30" height="30" rx="8" fill="#ffad18"/><circle cx="15" cy="15" r="7" fill="none" stroke="#fff" stroke-width="2"/><path d="M20 12h3a3 3 0 0 1 0 6h-3" fill="none" stroke="#fff" stroke-width="2"/></g><g transform="translate(215 112)"><circle cx="15" cy="15" r="15" fill="#ffad18"/><path d="M9 10v14m12-14v14M9 15h12" stroke="#fff" stroke-width="2"/></g>`
     }
   </svg>`;
 }
 
-function topRegion(title, extra = '') {
-  return `<header class="top-region">${statusBar()}${brand()}<h1 class="page-title">${title}</h1>${extra}</header>`;
+function topRegion(title, extra = '', showBack = false) {
+  return `<header class="top-region">
+    ${statusBar()}
+    ${brand()}
+    <div class="title-row">
+      ${
+        showBack
+          ? `<button class="back-button" data-action="go-home" aria-label="Back to home">${icon(
+              'back'
+            )}</button>`
+          : ''
+      }
+      <h1 class="page-title">${title}</h1>
+    </div>
+    ${extra}
+  </header>`;
 }
 
 function bottomNav(active) {
   const items = [
     ['home', 'Home', 'home'],
     ['explore', 'Explore', 'search'],
-    ['offers', 'Offers', 'tag'],
+    ['offers', 'Vouchers', 'tag'],
     ['rewards', 'Rewards', 'gift'],
     ['profile', 'Profile', 'user']
   ];
@@ -295,20 +526,70 @@ function getTimeEstimates() {
 function homeScreen() {
   const shortFrom = state.routeFrom.split(',')[0];
   const shortTo = state.routeTo.split(',')[0];
-  return `<div class="screen">${topRegion('Your route')}
-    <div class="route-map">${mapGraphic()}<span class="map-pill from">${shortFrom}</span><span class="map-pill to">${shortTo}</span></div>
-    <section class="route-card" aria-label="Route">
-      <div class="field-row">${icon('location')}<div><span>From:</span><strong>${
-    state.routeFrom
-  }</strong></div><button data-action="swap" aria-label="Swap route">${icon(
-    'swap'
-  )}</button></div>
-      <div class="field-row">${icon('pin')}<div><span>To:</span><strong>${
-    state.routeTo
-  }</strong></div><button data-action="edit-route" aria-label="Edit destination">${icon(
-    'chevron'
-  )}</button></div>
+  const previewOffers = [offers[0], offers[1], offers[4]];
+
+  return `<div class="screen">
+    ${topRegion(
+      'Skip the rush. Save nearby.',
+      '<p class="page-sub">Smart off-peak deals along your evening commute</p>'
+    )}
+
+    <section class="demo-strip" aria-label="How PeakOff works">
+      <button class="demo-step" data-action="demo-step" data-step="route">
+        <span>1</span>
+        <strong>Set Route</strong>
+        <small>${shortFrom} → ${shortTo}</small>
+      </button>
+      <button class="demo-step" data-action="find-offers">
+        <span>2</span>
+        <strong>Pick Spot</strong>
+        <small>${offers.length} live offers</small>
+      </button>
+      <button class="demo-step" data-action="quick-voucher">
+        <span>3</span>
+        <strong>Scan QR</strong>
+        <small>${state.claimed.length ? `${state.claimed.length} active` : 'Instant code'}</small>
+      </button>
     </section>
+
+    <div class="quick-cats" aria-label="Quick categories">
+      <button class="quick-cat" data-action="quick-cat" data-filter="coffee">
+        ${icon('coffee')}
+        <span>Coffee</span>
+      </button>
+      <button class="quick-cat" data-action="quick-cat" data-filter="entertainment">
+        ${icon('bowling')}
+        <span>Bowling &amp; Fun</span>
+      </button>
+      <button class="quick-cat" data-action="quick-cat" data-filter="special">
+        ${icon('gamepad')}
+        <span>Anti-Cafe &amp; Gym</span>
+      </button>
+      <button class="quick-cat" data-action="quick-cat" data-filter="expiry">
+        ${icon('tag')}
+        <span>50% Rescue</span>
+      </button>
+    </div>
+
+    <div class="route-map">
+      ${mapGraphic()}
+      <span class="map-pill from">${shortFrom}</span>
+      <span class="map-pill to">${shortTo}</span>
+    </div>
+
+    <section class="route-card" aria-label="Route">
+      <div class="field-row">
+        ${icon('location')}
+        <div><span>From:</span><strong>${state.routeFrom}</strong></div>
+        <button data-action="swap" aria-label="Swap route">${icon('swap')}</button>
+      </div>
+      <div class="field-row">
+        ${icon('pin')}
+        <div><span>To:</span><strong>${state.routeTo}</strong></div>
+        <button data-action="edit-route" aria-label="Edit destination">${icon('chevron')}</button>
+      </div>
+    </section>
+
     <div class="mode-switch" aria-label="Transport mode">${[
       ['train', 'Metro'],
       ['bus', 'Bus'],
@@ -321,10 +602,12 @@ function homeScreen() {
           }" data-action="mode" data-mode="${mode}">${icon(mode)} ${label}</button>`
       )
       .join('')}</div>
+
     <section class="section">
-      <div class="section-head"><h2>Choose your time</h2><span>${icon(
-        'info'
-      )} Estimates</span></div>
+      <div class="section-head">
+        <h2>Departure window</h2>
+        <span>${icon('info')} Commute traffic</span>
+      </div>
       <div class="time-list">${getTimeEstimates()
         .map(
           ([time, traffic, duration]) =>
@@ -336,9 +619,21 @@ function homeScreen() {
         )
         .join('')}</div>
     </section>
-    <button class="primary-button" data-action="find-offers">Find nearby offers ${icon(
-      'arrow'
-    )}</button>
+
+    <button class="primary-button" data-action="find-offers">
+      Explore all ${offers.length} nearby offers ${icon('arrow')}
+    </button>
+
+    <section class="home-preview">
+      <div class="section-head" style="padding:0 2px">
+        <h2>Top stops along your route</h2>
+        <button class="link-btn" data-action="find-offers">See all →</button>
+      </div>
+      <div class="offer-list" style="padding:0">
+        ${previewOffers.map(offerCard).join('')}
+      </div>
+    </section>
+
     ${bottomNav('home')}
   </div>`;
 }
@@ -348,38 +643,49 @@ function offersHeader() {
   return topRegion(
     'Offers ranked for you',
     `<div class="filters">
-      <button class="filter-select" data-action="navigate" data-screen="home">${icon(
+      <button class="filter-select" data-action="go-home">${icon(
         'pin'
       )} Near ${shortFrom}</button>
       <button class="filter-select" data-action="cycle-time">${icon('clock')} ${
       state.time
-    }–19:00</button>
-    </div>`
+    }–21:00</button>
+    </div>`,
+    true
   );
 }
 
 function filteredOffers() {
   if (state.filter === 'recommended') {
-    return offers.filter(item => item.category === 'recommended' || item.rank === 1);
+    return offers.filter(item => item.featured);
+  }
+  if (state.filter === 'coffee') {
+    return offers.filter(item => item.category === 'coffee');
+  }
+  if (state.filter === 'entertainment') {
+    return offers.filter(item => item.category === 'entertainment');
   }
   if (state.filter === 'special') {
     return offers.filter(item => item.category === 'special');
   }
   if (state.filter === 'expiry') {
-    return offers.filter(item => item.category === 'expiry' || item.stock <= 4);
+    return offers.filter(item => item.category === 'expiry');
   }
   return offers;
 }
 
 function exploreScreen() {
   const list = filteredOffers();
+  const categories = [
+    ['recommended', 'Recommended'],
+    ['coffee', 'Coffee & Tea'],
+    ['entertainment', 'Bowling & Fun'],
+    ['special', 'Anti-Cafe & Gym'],
+    ['expiry', 'Near-expiry'],
+    ['all', `All (${offers.length})`]
+  ];
+
   return `<div class="screen">${offersHeader()}
-    <div class="tabs">${[
-      ['recommended', 'Recommended'],
-      ['special', 'Special deals'],
-      ['expiry', 'Near-expiry'],
-      ['all', 'All']
-    ]
+    <div class="tabs">${categories
       .map(
         ([id, label]) =>
           `<button class="tab ${
@@ -394,7 +700,7 @@ function exploreScreen() {
             'search'
           )}<h2>No matches yet</h2><p>Try another category or departure time.</p></div>`
     }</div>
-    <div class="stock-banner">${icon('tag')} Save more · limited stock</div>
+    <div class="stock-banner">${icon('tag')} Dynamic off-peak pricing · limited stock</div>
     ${bottomNav('explore')}
   </div>`;
 }
@@ -409,9 +715,10 @@ function offerCard(offer) {
       : `<span class="rank">${offer.rank}</span>`
   }</span>
     <span class="offer-copy">
+      <small class="venue-tag">${offer.venue}</small>
       <h3>${offer.name}</h3>
       <span class="discount">${offer.discount}% OFF</span>
-      <span class="meta">${icon('walk')} ${offer.walk} min walk</span>
+      <span class="meta">${icon('walk')} ${offer.walk} min walk · ${offer.stock} left</span>
       <strong class="price">${money(offer.price)}</strong>
     </span>
     <span class="chevron">${icon('chevron')}</span>
@@ -439,10 +746,10 @@ function detailScreen() {
       </div>
     </div>
     <main class="detail-sheet">
-      <h1>${offer.venue}</h1>
+      <h1>${offer.venue.split(' · ')[0]}</h1>
       <div class="venue-meta">
         <span>${icon('walk')} ${offer.walk} min walk</span>
-        <span>${icon('wifi')} Quiet seating · Wi-Fi</span>
+        <span>${icon('wifi')} ${offer.perks || 'Quiet seating · Wi-Fi'}</span>
       </div>
       <div class="deal-strip">${icon('tag')} ${offer.tag} · ${
     offer.discount
@@ -462,7 +769,7 @@ function detailScreen() {
         ${icon('calendar')}
         <div>
           <strong>Available today until ${offer.expires}</strong>
-          <small>Within safe sell-by date.</small>
+          <small>Single-use QR coupon · Valid during off-peak window.</small>
         </div>
       </div>
       <div class="mini-map">${mapGraphic(true)}</div>
@@ -496,18 +803,32 @@ function voucherScreen() {
   const offer =
     offers.find(item => item.id === state.selectedOffer) || offers[0];
   const code = `PO-${offer.id.slice(0, 4).toUpperCase()}-2811`;
+  const isRedeemed = state.redeemed.includes(offer.id);
 
   return `<div class="screen voucher-screen">
     <div class="voucher-card">
       ${brand()}
-      <h1>${offer.discount}% off at ${offer.venue}</h1>
+      <h1>${offer.discount}% off at ${offer.venue.split(' · ')[0]}</h1>
       <p>${offer.name} · valid today until ${offer.expires}</p>
       <div class="qr" aria-label="Demo QR code">${qrGrid(code)}</div>
       <div class="voucher-code">${code}</div>
-      <div class="voucher-terms">Show this demo voucher at the venue. One use only. Mock data.</div>
+      <div class="voucher-terms">
+        ${
+          isRedeemed
+            ? '✓ Verified & redeemed at venue · +25 Peak points earned'
+            : 'Show this QR voucher at the venue. Single-use cryptographic token.'
+        }
+      </div>
+      <button class="primary-button" style="width:100%;margin:12px 0 0" data-action="simulate-scan" data-id="${
+        offer.id
+      }" data-code="${code}">
+        ${icon('qr')} ${
+    isRedeemed ? 'Redeemed ✓ (Back to Home)' : 'Simulate venue QR scan'
+  }
+      </button>
       <div class="voucher-actions">
+        <button class="secondary-button" data-action="go-home">Home</button>
         <button class="secondary-button" data-action="navigate" data-screen="offers">My vouchers</button>
-        <button class="secondary-button" data-action="back-detail">Offer details</button>
       </div>
     </div>
   </div>`;
@@ -515,7 +836,7 @@ function voucherScreen() {
 
 function myOffersScreen() {
   const claimed = offers.filter(item => state.claimed.includes(item.id));
-  return `<div class="screen">${topRegion('Your vouchers')}
+  return `<div class="screen">${topRegion('Your vouchers', '', true)}
     ${
       claimed.length
         ? `<div class="offer-list" style="padding-top:14px">${claimed
@@ -523,16 +844,16 @@ function myOffersScreen() {
             .join('')}</div>`
         : `<div class="empty-state">${icon(
             'ticket'
-          )}<h2>No vouchers yet</h2><p>Choose an offer near your route and claim its QR voucher.</p><button class="primary-button" style="width:100%;margin:18px 0" data-action="navigate" data-screen="explore">Explore offers</button></div>`
+          )}<h2>No vouchers yet</h2><p>Choose a coffee shop, bowling lane, or entertainment deal near your route and claim its QR voucher.</p><button class="primary-button" style="width:100%;margin:18px 0" data-action="navigate" data-screen="explore">Explore offers</button></div>`
     }
     ${bottomNav('offers')}
   </div>`;
 }
 
 function rewardsScreen() {
-  const points = 120 + state.claimed.length * 25;
+  const points = 120 + state.claimed.length * 25 + state.redeemed.length * 15;
   const pct = Math.min(100, Math.round((points / 200) * 100));
-  return `<div class="screen">${topRegion('Your rewards')}
+  return `<div class="screen">${topRegion('Your rewards', '', true)}
     <div class="profile-card">
       <div class="section-head">
         <h2>${points} Peak points</h2>
@@ -545,7 +866,7 @@ function rewardsScreen() {
       </div>
       <div class="stock-banner" style="margin:20px 0 0">${icon(
         'gift'
-      )} Claim offers to earn more (+25 pts each)</div>
+      )} +25 pts per claim · +15 pts on venue scan</div>
     </div>
     ${bottomNav('rewards')}
   </div>`;
@@ -554,19 +875,19 @@ function rewardsScreen() {
 function profileScreen() {
   const favCount = state.favorites.length;
   const menuItems = [
-    ['location', `Saved routes (${state.routeFrom.split(',')[0]} → ${state.routeTo})`],
+    ['location', `Saved route (${state.routeFrom.split(',')[0]} → ${state.routeTo})`],
     ['bell', 'Notifications · Quiet-hour alerts on'],
     ['heart', `Favourite venues (${favCount})`],
     ['logout', 'Reset demo']
   ];
 
-  return `<div class="screen">${topRegion('Profile')}
+  return `<div class="screen">${topRegion('Profile', '', true)}
     <section class="profile-card">
       <div class="profile-head">
         <div class="avatar">AA</div>
         <div>
           <h2>Aykhan Amirov</h2>
-          <p>PeakOff demo member</p>
+          <p>PeakOff demo member · ${state.claimed.length} voucher(s)</p>
         </div>
       </div>
       ${menuItems
@@ -576,13 +897,11 @@ function profileScreen() {
               index === 3
                 ? 'reset'
                 : index === 0
-                ? 'navigate'
+                ? 'go-home'
                 : index === 2
                 ? 'open-favs'
                 : 'profile-item'
-            }" ${index === 0 ? 'data-screen="home"' : ''}>${icon(
-              ico
-            )}<strong>${label}</strong>${icon('chevron')}</button>`
+            }">${icon(ico)}<strong>${label}</strong>${icon('chevron')}</button>`
         )
         .join('')}
     </section>
@@ -610,7 +929,32 @@ app.addEventListener('click', event => {
   const action = target.dataset.action;
 
   if (action === 'navigate') {
-    state.screen = target.dataset.screen;
+    navigateTo(target.dataset.screen);
+    return;
+  }
+  if (action === 'go-home') {
+    navigateTo('home');
+    return;
+  }
+  if (action === 'demo-step') {
+    const currentIdx = destinations.indexOf(state.routeTo);
+    state.routeTo = destinations[(currentIdx + 1) % destinations.length];
+    notify(`Route updated: ${state.routeFrom.split(',')[0]} → ${state.routeTo}`);
+    render();
+    return;
+  }
+  if (action === 'quick-cat') {
+    navigateTo('explore', { filter: target.dataset.filter });
+    return;
+  }
+  if (action === 'quick-voucher') {
+    const id = state.claimed[0] || 'coffee-pastry';
+    if (!state.claimed.includes(id)) {
+      state.claimed.push(id);
+      persist();
+    }
+    navigateTo('voucher', { selectedOffer: id });
+    return;
   }
   if (action === 'mode') {
     state.mode = target.dataset.mode;
@@ -622,38 +966,61 @@ app.addEventListener('click', event => {
   if (action === 'cycle-time') {
     const times = ['18:00', '18:30', '19:00'];
     state.time = times[(times.indexOf(state.time) + 1) % times.length];
-    notify(`Departure window updated to ${state.time}–19:00`);
+    notify(`Departure window updated to ${state.time}–21:00`);
   }
   if (action === 'find-offers') {
-    state.screen = 'explore';
+    navigateTo('explore', { filter: 'all' });
+    return;
   }
   if (action === 'filter') {
     state.filter = target.dataset.filter;
+    render();
+    return;
   }
   if (action === 'open-offer') {
-    state.selectedOffer = target.dataset.id;
-    state.screen = 'detail';
+    navigateTo('detail', { selectedOffer: target.dataset.id });
+    return;
   }
   if (action === 'back') {
-    state.screen = 'explore';
+    goBackInApp();
+    return;
   }
   if (action === 'back-detail') {
-    state.screen = 'detail';
+    navigateTo('detail');
+    return;
   }
   if (action === 'claim') {
     const offerId = target.dataset.id;
-    state.selectedOffer = offerId;
     if (!state.claimed.includes(offerId)) {
       state.claimed.push(offerId);
       persist();
-      notify('Voucher claimed · +25 Peak points');
+      notify('QR Voucher claimed · +25 Peak points');
       fetch('/api/claim', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ offerId })
       }).catch(() => {});
     }
-    state.screen = 'voucher';
+    navigateTo('voucher', { selectedOffer: offerId });
+    return;
+  }
+  if (action === 'simulate-scan') {
+    const offerId = target.dataset.id;
+    const code = target.dataset.code;
+    if (state.redeemed.includes(offerId)) {
+      navigateTo('home');
+      return;
+    }
+    state.redeemed.push(offerId);
+    persist();
+    notify('QR verified! Discount applied · +15 bonus pts');
+    fetch('/api/redeem', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code })
+    }).catch(() => {});
+    render();
+    return;
   }
   if (action === 'swap') {
     [state.routeFrom, state.routeTo] = [state.routeTo, state.routeFrom];
@@ -675,27 +1042,30 @@ app.addEventListener('click', event => {
     notify(`Destination updated to ${state.routeTo}`);
   }
   if (action === 'open-favs') {
-    state.filter = 'all';
-    state.screen = 'explore';
+    navigateTo('explore', { filter: 'all' });
     notify(
       state.favorites.length
         ? `${state.favorites.length} favourite offer(s)`
         : 'Tap the heart on any offer to save it'
     );
+    return;
   }
   if (action === 'profile-item') {
     notify('Quiet-hour commute notifications are active');
   }
   if (action === 'reset') {
     state.claimed = [];
+    state.redeemed = [];
     state.favorites = [];
     state.routeFrom = '28 May, Baku';
     state.routeTo = 'Ahmadli';
     persist();
-    state.screen = 'home';
     notify('Demo reset');
+    navigateTo('home');
+    return;
   }
   render();
 });
 
+initHistoryGuard();
 render();
