@@ -21,6 +21,16 @@ const {
   generateCoupon,
   redeemCoupon
 } = require('./src/engine');
+const {
+  loadDotEnv,
+  getApiKey,
+  computeDetailedMetrics,
+  generateDashboardSuggestion,
+  askBusinessGuide,
+  askMobileConcierge
+} = require('./src/grok');
+
+loadDotEnv();
 
 const MIME_TYPES = {
   '.html': 'text/html; charset=utf-8',
@@ -172,6 +182,72 @@ async function handleApi(req, res, pathname) {
     broadcastState('state-reset');
     sendJson(res, 200, { ok: true, state: sharedState });
     return true;
+  }
+
+  if (pathname === '/api/ai' && req.method === 'GET') {
+    sendJson(res, 200, {
+      ok: true,
+      configured: Boolean(getApiKey()),
+      provider: 'PeakAI'
+    });
+    return true;
+  }
+
+  if (pathname === '/api/ai' && req.method === 'POST') {
+    let body = {};
+    try {
+      body = await readJsonBody(req);
+      const mode = body.mode || 'suggest';
+      const targetState = body.state || sharedState;
+
+      if (mode === 'metrics') {
+        sendJson(res, 200, {
+          ok: true,
+          metrics: computeDetailedMetrics(targetState)
+        });
+        return true;
+      }
+      if (mode === 'guide') {
+        const result = await askBusinessGuide(body.question, targetState);
+        sendJson(res, 200, result);
+        return true;
+      }
+      if (mode === 'mobile-pick') {
+        const result = await askMobileConcierge(body);
+        sendJson(res, 200, result);
+        return true;
+      }
+      const result = await generateDashboardSuggestion(targetState);
+      sendJson(res, 200, result);
+      return true;
+    } catch (error) {
+      const metrics = computeDetailedMetrics(body.state || sharedState);
+      sendJson(res, 200, {
+        ok: true,
+        source: 'engine-fallback',
+        warning: error.message,
+        recommendedDiscount: metrics.opt.recommended,
+        confidence: 'High',
+        headline: `${metrics.demand.available} empty tables · ${metrics.opt.recommended}% margin-safe offer`,
+        summary: `With ${metrics.demand.occupied}/30 tables occupied, a ${metrics.opt.recommended}% offer keeps unit profit at ${metrics.unit.unitProfit.toFixed(
+          2
+        )} AZN and projects +${
+          metrics.forecast.projectedExtraGuests
+        } extra guests (+${metrics.forecast.incrementalProfit.toFixed(2)} AZN).`,
+        actionGuide: [
+          `Apply ${metrics.opt.recommended}% dynamic discount to capture evening commuters.`,
+          `Activate 4 pastry rescue bundles at 6.00 AZN before 19:00 (+${metrics.forecast.rescueRecoveredRevenue.toFixed(
+            2
+          )} AZN net).`,
+          'Verify single-use QR codes at arrival; offers auto-pause at 30/30 tables.'
+        ],
+        bundleTip: `Clear 4 expiring pastry bundles at 50% off to recover ${metrics.forecast.rescueRecoveredRevenue.toFixed(
+          2
+        )} AZN.`,
+        metrics
+      });
+      return true;
+    }
   }
 
   return false;

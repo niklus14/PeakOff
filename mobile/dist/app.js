@@ -43,9 +43,9 @@ const baseOffers = [
     tag: 'Fun stop',
     perks: 'Lanes ready · Shoe rental included',
     image:
-      'https://images.unsplash.com/photo-1514727200133-0f3a18aeeab4?auto=format&fit=crop&w=800&q=88',
+      'https://images.unsplash.com/photo-1587536849024-daaa4a417b16?auto=format&fit=crop&w=800&q=88',
     hero:
-      'https://images.unsplash.com/photo-1587536849024-daaa4a417b16?auto=format&fit=crop&w=1000&q=88'
+      'https://images.unsplash.com/photo-1614713568397-b31b779d0498?auto=format&fit=crop&w=1000&q=88'
   },
   {
     id: 'study-hour',
@@ -281,7 +281,10 @@ const state = {
   redeemed: Array.isArray(stored.redeemed) ? stored.redeemed : [],
   favorites: Array.isArray(stored.favorites) ? stored.favorites : [],
   routeFrom: '28 May, Baku',
-  routeTo: 'Ahmadli'
+  routeTo: 'Ahmadli',
+  aiTip: '',
+  aiBestId: 'coffee-pastry',
+  aiLoading: false
 };
 
 const app = document.querySelector('#app');
@@ -431,12 +434,6 @@ function notify(message) {
   notify.timer = setTimeout(() => toast.classList.remove('show'), 2500);
 }
 
-function statusBar() {
-  return `<div class="status"><span>17:35</span><span class="status-icons"><svg viewBox="0 0 20 14"><path fill="currentColor" d="M1 11h3v3H1zm5-3h3v6H6zm5-3h3v9h-3zm5-4h3v13h-3z"/></svg>${icon(
-    'wifi'
-  )}<span>▰</span></span></div>`;
-}
-
 function brand() {
   return `<div class="brand-row">${logo()}<span class="brand-name">Peak<b>Off</b></span></div>`;
 }
@@ -465,7 +462,6 @@ function mapGraphic(compact = false) {
 
 function topRegion(title, extra = '', showBack = false) {
   return `<header class="top-region">
-    ${statusBar()}
     ${brand()}
     <div class="title-row">
       ${
@@ -623,6 +619,26 @@ function homeScreen() {
     <button class="primary-button" data-action="find-offers">
       Explore all ${offers.length} nearby offers ${icon('arrow')}
     </button>
+
+    <div class="ai-concierge">
+      <div class="ai-concierge-top">
+        <strong>✦ PeakAI Route Concierge</strong>
+        <button data-action="ai-concierge">${
+          state.aiLoading ? 'Thinking…' : state.aiTip ? 'Refresh PeakAI' : 'Get live pick'
+        }</button>
+      </div>
+      <div>${
+        state.aiLoading
+          ? 'Checking live off-peak offers along your commute…'
+          : state.aiTip ||
+            `Tap "Get live pick" for a personalized PeakAI stop between ${shortFrom} and ${shortTo}.`
+      }</div>
+      ${
+        state.aiTip && !state.aiLoading
+          ? `<div style="margin-top:7px"><button data-action="open-offer" data-id="${state.aiBestId}" style="background:#ffb51b;color:#052f42">Open recommended stop →</button></div>`
+          : ''
+      }
+    </div>
 
     <section class="home-preview">
       <div class="section-head" style="padding:0 2px">
@@ -970,6 +986,40 @@ app.addEventListener('click', event => {
   }
   if (action === 'find-offers') {
     navigateTo('explore', { filter: 'all' });
+    return;
+  }
+  if (action === 'ai-concierge') {
+    if (state.aiLoading) return;
+    state.aiLoading = true;
+    render();
+    fetch('/api/ai', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        mode: 'mobile-pick',
+        routeFrom: state.routeFrom,
+        routeTo: state.routeTo,
+        mode_transport: state.mode,
+        time: state.time,
+        offers
+      })
+    })
+      .then(r => r.json())
+      .then(data => {
+        state.aiTip =
+          data?.tip ||
+          'Stop at Coffee & Co for 20% off or Strike Zone Bowling to skip peak transit.';
+        state.aiBestId = data?.bestOfferId || 'coffee-pastry';
+      })
+      .catch(() => {
+        state.aiTip =
+          'Stop at Coffee & Co (5 min walk) for 20% off while rush-hour traffic clears.';
+        state.aiBestId = 'coffee-pastry';
+      })
+      .finally(() => {
+        state.aiLoading = false;
+        render();
+      });
     return;
   }
   if (action === 'filter') {

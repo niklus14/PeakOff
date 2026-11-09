@@ -74,7 +74,7 @@ input:focus-visible {
   position: relative;
   color: white;
   background: linear-gradient(145deg, var(--navy), #03465c 72%, #037a7b);
-  padding: 30px 18px 16px;
+  padding: calc(18px + env(safe-area-inset-top, 0px)) 18px 16px;
   overflow: hidden;
 }
 
@@ -91,34 +91,11 @@ input:focus-visible {
   box-shadow: 0 0 35px rgba(0, 206, 187, 0.18);
 }
 
-.status {
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 12px;
-  font-weight: 700;
-  position: relative;
-  z-index: 2;
-  padding: 0 7px 0 3px;
-}
-
-.status-icons {
-  display: flex;
-  gap: 7px;
-  align-items: center;
-}
-
-.status-icons svg {
-  width: 16px;
-  height: 16px;
-}
-
 .brand-row {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin: 8px 0 2px;
+  margin: 0 0 4px;
   position: relative;
   z-index: 2;
 }
@@ -1121,6 +1098,40 @@ input:focus-visible {
   .top-region {
     padding-top: max(18px, env(safe-area-inset-top));
   }
+}
+
+.ai-concierge {
+  margin: 10px 14px 4px;
+  background: linear-gradient(135deg, #052f42, #03696c);
+  color: white;
+  border-radius: 15px;
+  padding: 12px 14px;
+  font-size: 12px;
+  line-height: 1.5;
+  box-shadow: 0 4px 12px rgba(5, 47, 66, 0.14);
+}
+
+.ai-concierge-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 5px;
+}
+
+.ai-concierge-top strong {
+  color: var(--amber);
+  font: 800 12px 'Manrope';
+}
+
+.ai-concierge button {
+  border: 0;
+  background: rgba(255, 255, 255, 0.16);
+  color: white;
+  border-radius: 9px;
+  padding: 5px 9px;
+  font-size: 11px;
+  font-weight: 700;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -418,6 +418,26 @@ h3 {
 
 .green {
   color: var(--teal);
+  font-weight: 700;
+}
+
+.red {
+  color: #d1433b;
+  font-weight: 700;
+}
+
+.stat.decline {
+  background: #fff9f8;
+  border-color: #f3d2cf;
+}
+
+.badge.danger {
+  background: #fdeceb;
+  color: #c63b33;
+}
+
+.dot.red {
+  background: #d94f46;
 }
 
 .stat.highlight {
@@ -443,7 +463,8 @@ h3 {
   font-size: 12px;
   color: #7c8c93;
   display: flex;
-  gap: 15px;
+  flex-wrap: wrap;
+  gap: 14px;
 }
 
 .dot {
@@ -764,22 +785,76 @@ select {
   gap: 20px;
 }
 
+.inventory-grid .card {
+  display: flex;
+  flex-direction: column;
+}
+
+.inventory-thumb {
+  position: relative;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #eaf2f0;
+  height: 176px;
+}
+
 .inventory-grid .food {
   width: 100%;
-  height: 150px;
-  margin-bottom: 16px;
+  height: 176px;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  margin-bottom: 0;
+  border-radius: 10px;
+}
+
+.inventory-tag {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(5, 43, 59, 0.84);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 9px;
+  border-radius: 6px;
+  backdrop-filter: blur(4px);
 }
 
 .inventory-grid p {
-  line-height: 1.7;
+  line-height: 1.65;
   color: var(--muted);
   font-size: 12px;
   margin-top: 8px;
 }
 
+.inventory-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.inventory-meta .badge {
+  margin-top: 0;
+}
+
+.inventory-net {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--teal);
+}
+
 .inventory-grid .btn {
-  margin-top: 17px;
+  margin-top: auto;
+  padding-top: 12px;
   width: 100%;
+}
+
+.inventory-card-spacer {
+  height: 14px;
 }
 
 .table-grid {
@@ -1053,5 +1128,302 @@ button .ui-icon {
   }
   h1 {
     font-size: 27px;
+  }
+  .calc-grid,
+  .stage-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* PeakAI Advisor, Scenario Switcher, Financial Simulator & Guide */
+.scenario-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 14px;
+}
+
+.scenario-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  margin-right: 4px;
+}
+
+.scenario-chip {
+  border: 1px solid var(--line);
+  background: #f6f8f8;
+  color: var(--text);
+  border-radius: 7px;
+  padding: 7px 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.scenario-chip.active {
+  background: var(--mint);
+  border-color: #8fd9c8;
+  color: #00796c;
+  font-weight: 700;
+}
+
+.ai-panel {
+  background: linear-gradient(135deg, #052b3b, #073f52);
+  color: white;
+  border-radius: 12px;
+  padding: 22px 24px;
+  margin-bottom: 23px;
+  border: 1px solid #0e5369;
+}
+
+.ai-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.ai-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  font-weight: 700;
+  background: rgba(255, 194, 71, 0.16);
+  color: var(--yellow);
+  border: 1px solid rgba(255, 194, 71, 0.35);
+  padding: 5px 10px;
+  border-radius: 20px;
+}
+
+.ai-pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #32c7a0;
+  box-shadow: 0 0 8px #32c7a0;
+}
+
+.ai-body {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.ai-headline {
+  font: 800 20px/1.3 Manrope;
+  margin-bottom: 6px;
+}
+
+.ai-summary {
+  font-size: 13px;
+  line-height: 1.65;
+  color: #c6dce4;
+  margin-bottom: 14px;
+}
+
+.ai-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.ai-actions .btn.ai-apply {
+  background: var(--yellow);
+  border-color: var(--yellow);
+  color: #052b3b;
+  font-weight: 800;
+}
+
+.ai-actions .btn.ai-ghost {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.22);
+  color: white;
+}
+
+.ai-guide-card {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 9px;
+  padding: 14px 16px;
+}
+
+.ai-guide-card h3 {
+  font-size: 13px;
+  color: var(--yellow);
+  margin-bottom: 8px;
+}
+
+.ai-guide-list {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 12px;
+  line-height: 1.65;
+  color: #deedf2;
+}
+
+.ai-guide-list li {
+  margin-bottom: 5px;
+}
+
+.ai-bundle-tip {
+  margin-top: 9px;
+  padding-top: 8px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.18);
+  font-size: 12px;
+  color: #9de8d4;
+}
+
+.calc-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin: 18px 0;
+}
+
+.calc-box {
+  background: #f7fafa;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  padding: 14px 15px;
+}
+
+.calc-box.accent {
+  background: var(--mint);
+  border-color: #b7e4d8;
+}
+
+.calc-box small {
+  display: block;
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 5px;
+}
+
+.calc-box strong {
+  font: 800 22px/1.2 Manrope;
+  color: var(--text);
+}
+
+.calc-box.accent strong {
+  color: #007869;
+}
+
+.calc-box span {
+  display: block;
+  font-size: 11px;
+  color: #5b727a;
+  margin-top: 4px;
+}
+
+.formula-card {
+  background: #f8fbfa;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  padding: 16px 18px;
+  margin-top: 16px;
+  font-size: 12px;
+  line-height: 1.7;
+  color: #486068;
+}
+
+.formula-card code {
+  background: #e8f2f0;
+  color: #064b44;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 11.5px;
+}
+
+.copilot-box {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.copilot-box input {
+  flex: 1;
+}
+
+.prompt-chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.prompt-chip {
+  border: 1px solid #cde5de;
+  background: var(--mint);
+  color: #0b6e61;
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.ai-answer {
+  margin-top: 16px;
+  background: #f5fbf9;
+  border-left: 4px solid var(--teal);
+  border-radius: 6px;
+  padding: 15px 18px;
+  font-size: 13px;
+  line-height: 1.7;
+  white-space: pre-line;
+  color: var(--text);
+}
+
+.stage-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.stage-card {
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  padding: 15px;
+  background: white;
+}
+
+.stage-card .stage-num {
+  font: 800 11px Manrope;
+  color: var(--teal);
+  background: var(--mint);
+  padding: 3px 8px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-bottom: 8px;
+}
+
+.stage-card h3 {
+  margin-bottom: 5px;
+}
+
+.stage-card p {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+@media (max-width: 1000px) {
+  .ai-body {
+    grid-template-columns: 1fr;
+  }
+  .calc-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .stage-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }

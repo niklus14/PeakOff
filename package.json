@@ -9,6 +9,7 @@
     "dev": "node server.js",
     "dev:dashboard": "node server.js dashboard",
     "dev:mobile": "node server.js mobile",
-    "check": "node --check server.js && node --check src/engine.js && node --check dashboard/dist/app.js && node --check mobile/dist/app.js"
+    "build": "rm -rf public && mkdir -p public/dashboard && cp -r mobile/dist/* public/ && cp -r dashboard/dist/* public/dashboard/",
+    "check": "node --check server.js && node --check src/engine.js && node --check src/grok.js && node --check api/ai.js && node --check dashboard/dist/app.js && node --check mobile/dist/app.js"
   }
 }
